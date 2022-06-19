@@ -4,5 +4,9 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
-  # root to: "brewery#home"
+  root to: "pages#home"
+  # Read all
+  resources :brewery, only: [:create, :show, :index, :destroy]
+  # Delete
+  # delete "breweries/:id",      to: "breweries#destroy"
 end

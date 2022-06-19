@@ -1,0 +1,5 @@
+<p>coucou</p>
+<% @last_breweries.each do |event| %>
+<%= event.name %>
+      <%= link_to brewery_path(event)%>
+      <% end %>
