@@ -3,60 +3,34 @@ class BreweriesController < ApplicationController
   before_action :set_brewery, only: [:show, :edit, :update, :destroy]
 
   def index
-    @breweries = policy_scope(Buddy)
+    @breweries = Brewery.all
   end
 
   def new
-    @user = current_user
-    #@buddy.user = current_user
     @brewery = Brewery.new
-    authorize @breweries
   end
 
   def show
-    @brewery = Brewery.find(params[:id])
-    authorize @brewery
-    #@booking = Booking.new
+    set_brewery
   end
 
   def create
-    @brewery = Brewery.new(brewery_params)
-    @brewery.user = current_user
-    authorize @brewery
-    if @brewery.save
-      redirect_to brewery_path(@brewery)
-    else
-      render :new, status: :unprocessable_entity
-    end
+    @brewery = Brewery.new(params[:brewery])
+    @brewery.save
+    #redirect_to brewery_path(@brewery)
   end
 
-  #def update
-  #  authorize @buddy
-  #  @buddy = Buddy.find(params[:id])
-  #  @buddy.update(buddy_params)
-  #  redirect_to buddy_path(@buddy)
-  #end
-
   def edit
-    @brewery = Brewery.find(params[:id])
-    authorize @brewery
-    #@buddy = Buddy.find(params[:id])
+    set_brewery
   end
 
   def update
-    @brewery = Brewery.find(params[:id])
-    @brewery.user = current_user
-    authorize @brewery
-    if @brewery.update(brewery_params)
-      redirect_to brewery_path(@buddy)
-    else
-      render :edit
-    end
+    set_brewery
+    @brewery.update(params[:brewery])
   end
 
   def destroy
-    @brewery = Brewery.find(params[:id])
-    authorize @brewery
+    set_brewery
     @brewery.destroy
     redirect_to breweries_path, status: :see_other
   end
@@ -64,7 +38,7 @@ class BreweriesController < ApplicationController
   private
 
   def brewery_params
-    params.require(:brewery).permit(:name, :address, :ZIP_codes, :city, :open_at, :closed_at)
+    params.require(:brewery).permit(:name, :address, :zip, :city, :open_at, :closed_at)
   end
 
   def set_brewery

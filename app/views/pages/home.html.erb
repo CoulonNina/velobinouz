@@ -1,5 +1,7 @@
+<%= render "shared/navbar" %>
+
 <p>coucou</p>
-<% @last_breweries.each do |event| %>
-<%= event.name %>
-      <%= link_to brewery_path(event)%>
-      <% end %>
+</h5><% @last_breweries.each do |brewery| %><h5>
+  <div><%= brewery.name%> <%= brewery.address%> <%= brewery.zip%> <%= brewery.city%> </div>
+  <% end %>
+
