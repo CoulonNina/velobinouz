@@ -8,14 +8,20 @@
 require "json"
 require "open-uri"
 
-url = "https://data.opendatasoft.com/api/records/1.0/search/?dataset=economicref-france-sirene-v3%40public&q=11.05Z&refine.etatadministratifetablissement=Actif"
-user_serialized = URI.open(url).read
-user = JSON.parse(user_serialized)
+puts "Cleaning up database..."
+Brewery.destroy_all
+puts "Database cleaned"
 
-repos["records"].each do |e|
+breweries_data = JSON.parse(URI.open("https://data.opendatasoft.com/api/records/1.0/search/?dataset=economicref-france-sirene-v3%40public&q=11.05Z&rows=1000&refine.etatadministratifetablissement=Actif").read)['records']
+breweries_data.each do |data|
   Brewery.create(
-      name: e["denominationunitelegale"],
-      address: e["adresseetablissement"],
-      poster_url: "https://image.tmdb.org/t/p/w500#{e["backdrop_path"]}",
-      rating: e["vote_average"],
+    name: data['fields']['denominationunitelegale'],
+    address: data['fields']['adresseetablissement'],
+    city: data['fields']['libellecommuneetablissement'],
+    zip: data['fields']['codepostaletablissement']
   )
+end
+puts "breweries created"
+
+
+
