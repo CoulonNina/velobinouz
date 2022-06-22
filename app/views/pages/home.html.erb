@@ -1,7 +1,6 @@
 <%= render "shared/navbar" %>
-
-<p>coucou</p>
 </h5><% @last_breweries.each do |brewery| %><h5>
   <div><%= brewery.name%> <%= brewery.address%> <%= brewery.zip%> <%= brewery.city%> </div>
   <% end %>
+<div>  <%= link_to "see more", breweries_path, class: "btn btn-success" %> </div>           
 
