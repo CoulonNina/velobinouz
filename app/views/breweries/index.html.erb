@@ -2,7 +2,7 @@
 
 <div class="container" >
 </h5><% @breweries.each do |brewery| %><h5>
-  <div><%= link_to brewery.name  %> <%= brewery.address%> <%= brewery.zip%> <%= brewery.city%> </div>
+  <div><%= link_to brewery.name, brewery_path(brewery)  %> <%= brewery.address%> <%= brewery.zip%> <%= brewery.city%> </div>
   <% end %>
 
 </div>
